@@ -46,8 +46,7 @@ class DataProviderHandler implements RequestHandlerInterface
 
     public function get(ServerRequestInterface $request) : ResponseInterface
     {
-        $em = $this->entityManager->getRepository(FooEntity::class);
-        var_dump($em->find(1));die;
+        $em = $this->entityManager->getRepository(FooEntity::class);;
         return $this->createResponseByArray($request, []);
     }
 }
