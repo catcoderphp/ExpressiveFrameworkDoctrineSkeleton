@@ -4,7 +4,7 @@ return [
         'connection' => [
             'orm_default' => [
                 'params' => [
-                    'url' => 'mysql://username:password@localhost/database',
+                    'url' => 'mysqli://user:cfh23@password/db',
                 ],
             ],
         ],
@@ -18,7 +18,7 @@ return [
             'my_entity' => [
                 'class' => \Doctrine\ORM\Mapping\Driver\AnnotationDriver::class,
                 'cache' => 'array',
-                'paths' => __DIR__ . '/../../src/App/Entity',
+                'paths' => __DIR__ . '/../../src/App/src/Entity',
             ],
         ],
     ],
