@@ -5,6 +5,7 @@ namespace App;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Zend\Diactoros\Response\JsonResponse;
 use Zend\Expressive\Hal\HalResponseFactory;
 use Zend\Expressive\Hal\ResourceGenerator;
 use Zend\Expressive\Hal\ResourceGenerator\Exception\OutOfBoundsException;
@@ -69,13 +70,22 @@ trait RestDispatchTrait
      * @throws \App\Exception\OutOfBoundsException if an `OutOfBoundsException` is
      *     thrown by the response factory and/or resource generator.
      */
-    private function createResponseByArray(ServerRequestInterface $request,$data) : ResponseInterface
+    private function createResponseByArray(ServerRequestInterface $request, $data) : ResponseInterface
     {
         try {
             $resource = $this->resourceGenerator->fromArray($data);
-            return $this->responseFactory->createResponse($request,$resource);
-        } catch (OutOfBoundsException $exception)
-        {
+            return $this->responseFactory->createResponse($request, $resource);
+        } catch (OutOfBoundsException $exception) {
+            throw OutOfBoundsException::create($exception);
+        }
+    }
+
+    private function createResponseByJsonObject($data, $headers = [], $statusCode = 200) : JsonResponse
+    {
+        try {
+            $jsonObject = new JsonResponse($data, $statusCode, $headers);
+            return $jsonObject;
+        } catch (OutOfBoundsException $exception) {
             throw OutOfBoundsException::create($exception);
         }
     }

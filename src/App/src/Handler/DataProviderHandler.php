@@ -13,6 +13,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Expressive\Hal\HalResponseFactory;
 use Zend\Expressive\Hal\ResourceGenerator;
+use Zend\Http\Response;
 
 class DataProviderHandler implements RequestHandlerInterface
 {
@@ -47,6 +48,6 @@ class DataProviderHandler implements RequestHandlerInterface
     public function get(ServerRequestInterface $request) : ResponseInterface
     {
         $em = $this->entityManager->getRepository(FooEntity::class);;
-        return $this->createResponseByArray($request, []);
+        return $this->createResponseByJsonObject($em->findAll(), [],Response::STATUS_CODE_200);
     }
 }
